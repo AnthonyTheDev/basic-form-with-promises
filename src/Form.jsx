@@ -11,74 +11,41 @@ function Form() {
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [year, setYear] = useState("");
+  const [message, setmessage] = useState(null);
+  const [submitted, setSubmitted] = useState({
+    status: false,
+    backgroundColor: "pink",
+    textColor: "black",
+  });
 
   const doCreateUser = async (data) => {
     try {
       const result = await createUser(data);
+      setmessage(`User ${result.firstName} ${result.lastName} added`);
+      setSubmitted({
+        status: true,
+        backgroundColor: "green",
+        textColor: "white",
+      });
+      setTimeout(() => {
+        setmessage(null);
+      }, 5000);
+
       console.log(result);
     } catch (error) {
-      console.log(error);
+      setmessage(`User exist already`);
+      setTimeout(() => {
+        setmessage(null);
+      }, 5000);
     }
   };
 
-  const inputStyle = {
-    height: "50px",
-    borderRadius: "10px",
-    width: "100%",
-    border: "1px solid #000",
-    marginBottom: "20px",
-    textAlign: "left",
-    paddingLeft: "10px",
-  };
-
-  const inputContainerStyle = {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-  };
-
-  const labelStyle = {
-    fontFamily: "arial",
-    marginBottom: "5px",
-    marginLeft: "10px",
-    fontWeight: 600,
-  };
-
   return (
-    <section
-      style={{
-        display: "flex",
-        width: "100vw",
-        height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "pink",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          width: "30%",
-          minHeight: "60%",
-          padding: "10px 20px",
-          borderRadius: "20px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            fontFamily: "arial",
-            fontWeight: "800",
-            fontStyle: "bold",
-            fontSize: "34px",
-          }}
-        >
-          Sign Up Here!
-        </h1>
+    <section className="background">
+      <div className="innerform">
+        <h1 className="signin-header">Sign Up Here!</h1>
         <form
+          className="form-container"
           onSubmit={(e) => {
             e.preventDefault();
             doCreateUser({
@@ -91,45 +58,32 @@ function Form() {
               year,
             });
           }}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "50%",
-          }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <div style={{ ...inputContainerStyle, width: "45%" }}>
-              <label style={labelStyle} htmlFor="first-name">
+          <div className="inputcontainer">
+            <div className="inputcontainer-labels two-fields">
+              <label className="label" htmlFor="first-name">
                 First Name
               </label>
               <input
                 id="first-name"
                 placeholder="First Name"
                 required
-                style={inputStyle}
+                className="input"
                 type="text"
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
               />
             </div>
-            <div style={{ ...inputContainerStyle, width: "45%" }}>
-              <label style={labelStyle} htmlFor="last-name">
+            <div className="inputcontainer-labels two-fields">
+              <label className="label" htmlFor="last-name">
                 Last Name
               </label>
               <input
                 id="last-name"
                 placeholder="Last Name"
                 required
-                style={inputStyle}
+                className="input"
                 type="text"
                 onChange={(e) => {
                   setLastName(e.target.value);
@@ -137,23 +91,23 @@ function Form() {
               />
             </div>
           </div>
-          <div style={inputContainerStyle}>
-            <label style={labelStyle} htmlFor="email">
+          <div className="inputcontainer-labels">
+            <label className="label" htmlFor="email">
               Email
             </label>
             <input
               id="email"
               placeholder="Email"
               required
-              style={inputStyle}
+              className="input"
               type="email"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
           </div>
-          <div style={inputContainerStyle}>
-            <label style={labelStyle} htmlFor="password">
+          <div className="inputcontainer-labels">
+            <label className="label" htmlFor="password">
               Password
             </label>
 
@@ -161,7 +115,7 @@ function Form() {
               id="password"
               placeholder="Password"
               required
-              style={inputStyle}
+              className="input"
               type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -169,32 +123,18 @@ function Form() {
             />
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-
-              // width: "45%",
-            }}
-          >
-            <div style={inputContainerStyle}>
-              <label style={labelStyle} htmlFor="">
+          <div className="inputcontainer">
+            <div className="inputcontainer-labels">
+              <label className="label" htmlFor="">
                 Date of Birth
               </label>
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div style={{ width: "30%" }}>
+              <div className="inputcontainer">
+                <div className="three-fields">
                   <select
                     onChange={(e) => {
                       setMonth(e.target.value);
                     }}
-                    style={inputStyle}
+                    className="input"
                     name="Month"
                     id="month"
                     required
@@ -207,13 +147,13 @@ function Form() {
                     ))}
                   </select>
                 </div>
-                <div style={{ width: "30%" }}>
+                <div className="three-fields">
                   <select
                     required
                     onChange={(e) => {
                       setDay(e.target.value);
                     }}
-                    style={inputStyle}
+                    className="input"
                     name="Day"
                     id="day"
                   >
@@ -227,14 +167,14 @@ function Form() {
                     )}
                   </select>
                 </div>
-                <div style={{ width: "30%" }}>
+                <div className="three-fields">
                   <input
                     required
                     onChange={(e) => {
                       setYear(e.target.value);
                     }}
                     maxLength="4"
-                    style={inputStyle}
+                    className="input"
                     name="Year"
                     id="year"
                     placeholder="Year"
@@ -244,15 +184,19 @@ function Form() {
             </div>
           </div>
           <input
-            required
+            disabled={submitted.status}
             style={{
-              ...inputStyle,
-              width: "100px",
-              textAlign: "center",
-              paddingLeft: "0px",
+              backgroundColor: submitted.backgroundColor,
+              color: submitted.textColor,
+              cursor: submitted.status === true ? "default" : "pointer",
             }}
+            required
+            className="input submit-btn"
             type="submit"
           />
+          {message && (
+            <p style={{ color: submitted.backgroundColor }}>{message}</p>
+          )}
         </form>
       </div>
     </section>

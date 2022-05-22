@@ -1,12 +1,12 @@
 let users = {
-    Robin: {
+    "rwieruch@gmail.com": {
         firstName: "Robin",
         lastName: "Wieruch",
         email: "rwieruch@gmail.com",
         password: "gehsikdk",
         DOB: {},
     },
-    Dave: {
+    "ddavddis@gmail.com": {
         firstName: "Dave",
         lastName: "Davddis",
         email: "ddavddis@gmail.com",
@@ -20,10 +20,14 @@ const createUser = ({ firstName, lastName, password, email, ...dob }) => {
         if (!firstName || !lastName || !password || !email || !dob) {
             reject(new Error("Not All Info Provide"));
         }
+
+        if (users[email]) {
+            reject(new Error("user already registered"));
+        }
         const newUser = { firstName, lastName, password, email, dob };
-        const name = newUser.firstName;
-        users = {...users, [name]: newUser };
-        setTimeout(() => resolve(users), 250);
+        const userEmail = newUser.email;
+        users = {...users, [userEmail]: newUser };
+        setTimeout(() => resolve(users[userEmail]), 250);
     }).then((res) => res);
 };
 
