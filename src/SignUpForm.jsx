@@ -1,9 +1,11 @@
 import { useState } from "react";
 
-import createUser from "./createUser";
+import { createUser } from "./createUser";
 import { monthsOfYear, buildDaysOfMonth } from "./createDateOptions";
 
-function Form() {
+import { useNavigate, Link } from "react-router-dom";
+
+function SignUpForm({ authUser }) {
   const [firstName, setFirstName] = useState("anthony");
   const [lastName, setLastName] = useState("clinton");
   const [email, setEmail] = useState("mr.clinton@aol.com");
@@ -17,11 +19,12 @@ function Form() {
     backgroundColor: "pink",
     textColor: "black",
   });
+  const navigate = useNavigate();
 
   const doCreateUser = async (data) => {
     try {
-      const result = await createUser(data);
-      setmessage(`User ${result.firstName} ${result.lastName} added`);
+      const user = await createUser(data);
+      setmessage(`User ${user.firstName} ${user.lastName} added`);
       setSubmitted({
         status: true,
         backgroundColor: "green",
@@ -30,8 +33,9 @@ function Form() {
       setTimeout(() => {
         setmessage(null);
       }, 5000);
-
-      console.log(result);
+      authUser(user);
+      navigate(user.userURL);
+      console.log(user);
     } catch (error) {
       setmessage(`User exist already`);
       setTimeout(() => {
@@ -198,9 +202,12 @@ function Form() {
             <p style={{ color: submitted.backgroundColor }}>{message}</p>
           )}
         </form>
+        <Link to={"/"}>
+          <p className="signup link">Already have an account? Sign in here</p>
+        </Link>
       </div>
     </section>
   );
 }
 
-export default Form;
+export default SignUpForm;

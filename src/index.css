@@ -24,7 +24,6 @@
 .innerform {
     background-color: white;
     width: 30%;
-    min-height: 60%;
     padding: 10px 20px;
     border-radius: 20px;
     display: flex;
@@ -38,6 +37,7 @@
     font-weight: 800;
     font-style: bold;
     font-size: 34px;
+    margin-bottom: 50px;
 }
 
 .input {
@@ -75,6 +75,7 @@
     text-align: center;
     padding-left: 0px;
     cursor: default;
+    transition: 0.5s;
 }
 
 .label {
@@ -82,4 +83,53 @@
     margin-bottom: 5px;
     margin-left: 10px;
     font-weight: 600;
+}
+
+.link,
+a {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signup {
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+
+/*-----------------------------------------------------
+----------------User Styles----------------------------
+------------------------------------------------------*/
+
+.user-section {
+    width: 100vw;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.user-nav {
+    width: 100%;
+    background-color: pink;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 100px;
+    align-items: center;
+}
+
+.logo {
+    font-size: 30px;
+}
+
+.user {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.user-logout {
+    display: flex;
+}
+
+.logout {
+    color: #fff;
 }
